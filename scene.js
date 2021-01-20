@@ -199,10 +199,10 @@
 		//Control
 		{ 
 				controls = new OrbitControls( camera, renderer.domElement );
-				controls.maxPolarAngle = Math.PI * 0.495;
+				// controls.maxPolarAngle = Math.PI * 0.495;
 				controls.target.set( 0, 10, 0 );
 				controls.minDistance = 40.0;
-				controls.maxDistance = 10000.0;
+				controls.maxDistance = 1000000.0;
 				controls.update();
 				//Stats(FPS)
 				stats = new Stats();

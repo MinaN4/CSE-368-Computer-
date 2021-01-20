@@ -1,0 +1,54 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Vector3Node = Vector3Node;
+
+var _threeModule = require("../../../../build/three.module.js");
+
+var _InputNode = require("../core/InputNode.js");
+
+var _NodeUtils = require("../core/NodeUtils.js");
+
+/**
+ * @author sunag / http://www.sunag.com.br/
+ */
+function Vector3Node(x, y, z) {
+  _InputNode.InputNode.call(this, 'v3');
+
+  this.value = x instanceof _threeModule.Vector3 ? x : new _threeModule.Vector3(x, y, z);
+}
+
+Vector3Node.prototype = Object.create(_InputNode.InputNode.prototype);
+Vector3Node.prototype.constructor = Vector3Node;
+Vector3Node.prototype.nodeType = "Vector3";
+
+_NodeUtils.NodeUtils.addShortcuts(Vector3Node.prototype, 'value', ['x', 'y', 'z']);
+
+Vector3Node.prototype.generateReadonly = function (builder, output, uuid, type
+/*, ns, needsUpdate*/
+) {
+  return builder.format("vec3( " + this.x + ", " + this.y + ", " + this.z + " )", type, output);
+};
+
+Vector3Node.prototype.copy = function (source) {
+  _InputNode.InputNode.prototype.copy.call(this, source);
+
+  this.value.copy(source);
+  return this;
+};
+
+Vector3Node.prototype.toJSON = function (meta) {
+  var data = this.getJSONNode(meta);
+
+  if (!data) {
+    data = this.createJSONNode(meta);
+    data.x = this.x;
+    data.y = this.y;
+    data.z = this.z;
+    if (this.readonly === true) data.readonly = true;
+  }
+
+  return data;
+};
